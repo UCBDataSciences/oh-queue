@@ -14,21 +14,21 @@ oauth = OAuth()
 @auth.record
 def record_params(setup_state):
     app = setup_state.app
-    server_url = app.config.get('OK_SERVER_URL')
+    server_url ='https://localhost:5000' #app.config.get('OK_SERVER_URL')
     auth.ok_auth = oauth.remote_app(
         'ok-server',
-        consumer_key=app.config.get('OK_KEY'),
-        consumer_secret=app.config.get('OK_SECRET'),
+        consumer_key='test-key' #app.config.get('OK_KEY'),
+        consumer_secret= 'test-secret' #app.config.get('OK_SECRET'),
         request_token_params={
             'scope': 'email',
             'state': lambda: security.gen_salt(10)
         },
-        base_url=server_url + '/api/v3/',
+        base_url= server_url + '/api/v3/',
         request_token_url=None,
         access_token_method='POST',
         access_token_url=server_url + '/oauth/token',
         authorize_url=server_url + '/oauth/authorize',)
-    auth.course_offering = app.config.get('COURSE_OFFERING')
+    auth.course_offering = 'ds-advising' #app.config.get('COURSE_OFFERING')
     auth.debug = app.config.get('DEBUG')
 
     @auth.ok_auth.tokengetter
